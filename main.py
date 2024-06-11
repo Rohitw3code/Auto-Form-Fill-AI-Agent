@@ -5,9 +5,9 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from Tasks import task_1
 import logging
-import json
 from urllib import request
 from bs4 import BeautifulSoup
+import json
 
 values = {
     "firstName": "Rohit",
@@ -29,6 +29,7 @@ values = {
 
 
 def run_driver():
+    data = json.load(open('form_attributes.json'))
     driver = webdriver.Firefox()
     try:
         # Open the target URL
@@ -37,37 +38,19 @@ def run_driver():
         for key in data.keys():
             input_box = driver.find_element(By.ID, data[key])
             input_box.send_keys(values[key])
-    except:
+    except Exception as e:
         pass
-
 
 url_1 = "https://form.jotform.com/241617189501153"
 page = request.urlopen(url_1)
-soup = BeautifulSoup(page,features="html.parser")
+soup = BeautifulSoup(page, features="html.parser")
 source_code = soup.body.prettify()
 
 if __name__ == '__main__':
-    print("started==========")
-    logging.info(">>> Crew started=====")
     event = Crew(
         agents=[agent_1],
         tasks=[task_1],
-        verbos=True
+        verbose=True  
     )
-    logging.info(">>> Crew Ended=========")
-
-    data = {
-    'source_code':source_code,
-    'labels':FormAttributes
-    }
-
-    logging.info(">>>> started======")
-    res = event.kickoff(inputs=data)
-    logging.info(">>>> completed====")
-    
-    data = json.load(open('form_attributes.json'))
-
-
-
-
-
+    res = event.kickoff(inputs={'source_code': source_code, 'labels': FormAttributes})
+    run_driver()

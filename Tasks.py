@@ -1,6 +1,6 @@
 from config_entity import FormAttributes
 from Agents import agent_1
-from crewai import Agent, Task, Crew
+from crewai import Task
 
 task_1 = Task(
     description="You are given HTML code {source_code}. Your task is to find the `id` attribute values of all input and textarea tags in the HTML code, considering the tag name value to match with the correct entity.",

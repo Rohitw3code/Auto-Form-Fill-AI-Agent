@@ -1,4 +1,4 @@
-from crewai import Agent, Task, Crew
+from crewai import Agent
 
 
 agent_1 = Agent(
